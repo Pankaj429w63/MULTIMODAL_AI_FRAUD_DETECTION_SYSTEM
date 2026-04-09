@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fraud Detection | Behavioral Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --input-focus: #3b82f6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .header { text-align: center; margin-bottom: 3rem; }
+        .shield-icon {
+            background-color: var(--primary);
+            color: white;
+            width: 64px; height: 64px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
+        }
+
+        h1 { font-size: 2.5rem; font-weight: 700; color: #0f172a; margin-bottom: 0.75rem; }
+        .subtitle { color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin: 0 auto; }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 2.5rem; border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+            width: 100%; max-width: 850px; border: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem;
+            color: #334155; display: flex; align-items: center; gap: 0.5rem;
+        }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group.full-width { grid-column: span 2; }
+
+        label { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: #475569; }
+        input, select, textarea {
+            width: 100%; padding: 0.875rem 1rem; border: 1.5px solid var(--border);
+            border-radius: 0.75rem; font-size: 1rem; outline: none; background-color: #fcfcfd;
+        }
+        input:focus, select:focus, textarea:focus { border-color: var(--input-focus); background-color: white; }
+
+        button {
+            width: 100%; padding: 1.125rem; background-color: var(--primary); color: white;
+            border: none; border-radius: 0.875rem; font-size: 1.1rem; font-weight: 600;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            gap: 0.75rem; transition: all 0.2s; margin-top: 2rem;
+        }
+        button:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
+
+        #result-container { display: none; margin-top: 2.5rem; }
+        .status-banner { padding: 1.5rem; border-radius: 1rem; text-align: center; margin-bottom: 2rem; }
+        .status-banner.legit { background-color: #ecfdf5; border: 1px solid #d1fae5; color: #065f46; }
+        .status-banner.fraud { background-color: #fef2f2; border: 1px solid #fee2e2; color: #991b1b; }
+        .status-banner.review { background-color: #fffbeb; border: 1px solid #fef3c7; color: #92400e; }
+
+        .analysis-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 2rem; }
+        .analysis-card { padding: 1.25rem; background-color: #f8fafc; border: 1px solid var(--border); border-radius: 1rem; text-align: center; }
+        .analysis-label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem; }
+        .analysis-value { font-size: 1.5rem; font-weight: 700; }
+
+        .reasoning-report { background-color: #f1f5f9; border-radius: 1rem; padding: 1.5rem; }
+        .reasoning-title { font-size: 0.9rem; font-weight: 700; color: #475569; margin-bottom: 1rem; text-transform: uppercase; }
+        .reason-item { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem; }
+        .reason-dot { width: 6px; height: 6px; border-radius: 50%; background-color: var(--primary); margin-top: 0.5rem; flex-shrink: 0; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="shield-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h1>Behavioral Risk Intelligence</h1>
+        <p class="subtitle">AI-driven analysis of session metadata, user behavior, and identity trust vectors.</p>
+    </div>
+
+    <div class="card">
+        <h2 class="section-title">Session & Behavioral Context</h2>
+        
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="amount">Transaction Amount ($)</label>
+                <input type="number" id="amount" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <label for="time_of_day">Time of Day (0-23)</label>
+                <input type="number" id="time_of_day" placeholder="14" min="0" max="23">
+            </div>
+            <div class="form-group">
+                <label for="location">Geographic Location</label>
+                <select id="location">
+                    <option value="Local">Local (Recognized)</option>
+                    <option value="Foreign">Foreign (Unusual)</option>
+                    <option value="Remote">Remote/VPN</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="device_status">Device Fingerprint</label>
+                <select id="device_status">
+                    <option value="Trusted">Trusted Device</option>
+                    <option value="New">New/Unrecognized Device</option>
+                    <option value="Incognito">Private/Incognito Mode</option>
+                </select>
+            </div>
+            <div class="form-group full-width">
+                <label for="account_age_days">Account Maturity (Days)</label>
+                <input type="number" id="account_age_days" placeholder="365">
+            </div>
+            <div class="form-group full-width">
+                <label for="complaint">Narrative Context (NLP)</label>
+                <textarea id="complaint" rows="2" placeholder="Explain the transaction context..."></textarea>
+            </div>
+        </div>
+
+        <button onclick="runAnalysis()">Execute Behavioral Analysis</button>
+
+        <div id="result-container">
+            <div id="status-banner" class="status-banner">
+                <div id="status-title" style="font-size:1.5rem; font-weight:700;"></div>
+                <div>Risk Decision Engine Verdict</div>
+            </div>
+
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <div class="analysis-label">Behavioral Risk</div>
+                    <div id="score-t" class="analysis-value">--</div>
+                </div>
+                <div class="analysis-card">
+                    <div class="analysis-label">NLP Sentiment</div>
+                    <div id="score-c" class="analysis-value">--</div>
+                </div>
+                <div class="analysis-card">
+                    <div class="analysis-label">Identity Trust</div>
+                    <div id="score-i" class="analysis-value">--</div>
+                </div>
+            </div>
+
+            <div class="reasoning-report">
+                <div class="reasoning-title">Intelligence Findings</div>
+                <div id="risk-factors-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    async function runAnalysis() {
+        const container = document.getElementById("result-container");
+        const banner = document.getElementById("status-banner");
+        const title = document.getElementById("status-title");
+        const factorsList = document.getElementById("risk-factors-list");
+        
+        container.style.display = "none";
+
+        const data = {
+            behavior: {
+                amount: parseFloat(document.getElementById("amount").value) || 0,
+                location: document.getElementById("location").value,
+                device_status: document.getElementById("device_status").value,
+                time_of_day: parseInt(document.getElementById("time_of_day").value) || 12,
+                account_age_days: parseInt(document.getElementById("account_age_days").value) || 365
+            },
+            complaint_text: document.getElementById("complaint").value || "No feedback",
+            selfie_path: "selfie.jpg",
+            id_path: "id.jpg"
+        };
+
+        try {
+            const response = await fetch("/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                const res = result.results;
+                container.style.display = "block";
+                
+                banner.className = `status-banner ${res.decision.toLowerCase()}`;
+                title.innerText = res.decision === "FRAUD" ? "⚠️ HIGH RISK" : (res.decision === "REVIEW" ? "🔍 MANUAL REVIEW" : "✅ LEGITIMATE");
+
+                document.getElementById('score-t').innerText = res.transaction_score.toFixed(2);
+                document.getElementById('score-c').innerText = res.complaint_score.toFixed(2);
+                document.getElementById('score-i').innerText = res.identity_score.toFixed(2);
+
+                factorsList.innerHTML = res.risk_factors.map(f => `
+                    <div class="reason-item"><div class="reason-dot"></div><div>${f}</div></div>
+                `).join('');
+            }
+        } catch (e) { alert("Analysis failed: " + e.message); }
+    }
+    </script>
+</body>
+</html>

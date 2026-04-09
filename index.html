@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Fraud Detection</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    /* Top Icon */
+    .icon-box {
+      width: 70px;
+      height: 70px;
+      background: #3b6edc;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .icon-box i {
+      color: white;
+      font-size: 26px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 600;
+      color: #1d2b4f;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #6c7a96;
+      margin-bottom: 30px;
+      font-size: 16px;
+    }
+
+    /* Card */
+    .card {
+      background: #ffffff;
+      width: 600px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1d2b4f;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #d6dbe6;
+      outline: none;
+      font-size: 14px;
+      background: #f9fafc;
+    }
+
+    input:focus {
+      border-color: #3b6edc;
+    }
+
+    .row {
+      display: flex;
+      gap: 15px;
+    }
+
+    .row .input-group {
+      flex: 1;
+    }
+
+    /* Button */
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      background: #3b6edc;
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background: #2f5bd1;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 13px;
+      color: #8a94a6;
+    }
+  </style>
+
+  <!-- Icons -->
+  <script src="https://kit.fontawesome.com/4c6efc7e2a.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- Icon -->
+  <div class="icon-box">
+    <i class="fas fa-shield-alt"></i>
+  </div>
+
+  <!-- Title -->
+  <h1>AI Fraud Detection</h1>
+  <p class="subtitle">Advanced transaction analysis powered by machine learning</p>
+
+  <!-- Card -->
+  <div class="card">
+
+    <div class="input-group">
+      <label>Transaction Amount *</label>
+      <input type="number" placeholder="$ 0.00" required>
+    </div>
+
+    <div class="row">
+      <div class="input-group">
+        <label>Old Balance (Origin) *</label>
+        <input type="number" placeholder="0.00" required>
+      </div>
+
+      <div class="input-group">
+        <label>New Balance (Origin) *</label>
+        <input type="number" placeholder="0.00" required>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-group">
+        <label>Old Balance (Destination)</label>
+        <input type="number" placeholder="0.00">
+      </div>
+
+      <div class="input-group">
+        <label>New Balance (Destination)</label>
+        <input type="number" placeholder="0.00">
+      </div>
+    </div>
+
+    <button class="btn">
+      <i class="fas fa-chart-line"></i> Analyze Transaction
+    </button>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    All transactions are analyzed using advanced AI algorithms
+  </div>
+
+</body>
+</html>
