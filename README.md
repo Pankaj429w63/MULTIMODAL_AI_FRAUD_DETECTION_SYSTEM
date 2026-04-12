@@ -118,6 +118,9 @@ http://127.0.0.1:8000/docs
 🔹 Run the Streamlit User Interface
 streamlit run app.py
 
+
+
+
 Open in browser:
 
 http://localhost:8501
@@ -166,3 +169,4 @@ PyTorch Official Documentation
 FastAPI Documentation
 Scikit-learn Documentation
 Swin Transformer Research Papers
+
